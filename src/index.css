@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { -webkit-tap-highlight-color: transparent; }
+  body {
+    @apply bg-gray-50 text-gray-900 font-sans;
+    overscroll-behavior: none;
+  }
+  #root {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    position: relative;
+    background: white;
+    box-shadow: 0 0 40px rgba(0,0,0,0.08);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-violet-600 text-white font-semibold rounded-2xl px-6 py-3.5
+           active:scale-95 transition-all duration-150 shadow-lg shadow-violet-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-danger {
+    @apply bg-red-500 text-white font-semibold rounded-2xl px-6 py-3.5
+           active:scale-95 transition-all duration-150 shadow-lg shadow-red-200;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-4;
+  }
+  .input {
+    @apply w-full border border-gray-200 rounded-xl px-4 py-3 text-sm
+           focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent
+           placeholder:text-gray-400 bg-gray-50;
+  }
+}
+
+/* Safe area padding for mobile notch */
+.safe-top    { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+/* Leaflet map override */
+.leaflet-container { border-radius: 16px; }
