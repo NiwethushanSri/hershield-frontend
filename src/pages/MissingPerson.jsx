@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, AlertTriangle, MapPin, Clock, Phone, Share2, Plus, User } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 
 function timeAgo(iso) {
@@ -74,7 +74,7 @@ export default function MissingPerson() {
   const set = k => e => setForm(f => ({...f, [k]: e.target.value}));
 
   useEffect(() => {
-    axios.get('/api/missing').then(r => setAlerts(r.data)).catch(() => {}).finally(() => setLoading(false));
+    api.get('/api/missing').then(r => setAlerts(r.data)).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
   const submit = async (e) => {
@@ -82,7 +82,7 @@ export default function MissingPerson() {
     if (!form.name || !form.contact_phone) { toast.error('Name and contact number required'); return; }
     setSubmitting(true);
     try {
-      const { data } = await axios.post('/api/missing', form);
+      const { data } = await api.post('/api/missing', form);
       setAlerts(p => [data, ...p]);
       setShowReport(false);
       setForm({ name:'', age:'', last_seen:'', last_location:'', description:'', vehicle:'', contact_phone:'' });

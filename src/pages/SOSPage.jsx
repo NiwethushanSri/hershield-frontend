@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { AlertCircle, Phone, Video, Mic, MapPin, Shield, X, CheckCircle, Radio } from 'lucide-react';
 
@@ -69,7 +69,7 @@ export default function SOSPage() {
     setPhase('active');
     setRecording(true);
     try {
-      const { data } = await axios.post('/api/sos/trigger', {
+      const { data } = await api.post('/api/sos/trigger', {
         latitude: location?.lat,
         longitude: location?.lng,
       });
@@ -82,7 +82,7 @@ export default function SOSPage() {
 
   const resolveAlert = async () => {
     try {
-      if (alertId) await axios.patch(`/api/sos/${alertId}/resolve`);
+      if (alertId) await api.patch(`/api/sos/${alertId}/resolve`);
     } catch {}
     setPhase('resolved');
     setRecording(false);

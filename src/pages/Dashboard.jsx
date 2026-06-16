@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import api from '../utils/api';
 import {
   Shield, AlertCircle, Users, Navigation, Map,
   Bell, LogOut, MapPin, TrendingUp, ChevronRight,
@@ -50,7 +50,7 @@ export default function Dashboard() {
       (pos) => {
         const { latitude: lat, longitude: lng } = pos.coords;
         setLocation({ lat, lng });
-        axios.get(`/api/route/safety-score?lat=${lat}&lng=${lng}`)
+        api.get(`/api/route/safety-score?lat=${lat}&lng=${lng}`)
           .then(r => setSafety(r.data))
           .catch(() => {});
       },

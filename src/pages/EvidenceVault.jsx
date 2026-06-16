@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Lock, Upload, Image, Mic, Video, FileText, Trash2, Download, Plus, Shield, Eye, EyeOff } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 
 const TYPE_META = {
@@ -35,7 +35,7 @@ export default function EvidenceVault() {
 
   const load = async () => {
     try {
-      const { data } = await axios.get('/api/vault');
+      const { data } = await api.get('/api/vault');
       setItems(data);
     } catch { /* stay with empty */ }
     finally { setLoading(false); }
@@ -53,7 +53,7 @@ export default function EvidenceVault() {
       const fd = new FormData();
       fd.append('file', file);
       fd.append('category', addCategory);
-      const { data } = await axios.post('/api/vault/upload', fd, {
+      const { data } = await api.post('/api/vault/upload', fd, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setItems(prev => [data, ...prev]);
@@ -70,7 +70,7 @@ export default function EvidenceVault() {
   const deleteItem = async (id, name) => {
     if (!confirm(`Delete "${name}" from vault?`)) return;
     try {
-      await axios.delete(`/api/vault/${id}`);
+      await api.delete(`/api/vault/${id}`);
       setItems(prev => prev.filter(i => i.id !== id));
       toast.success('File removed from vault');
     } catch { toast.error('Delete failed'); }
@@ -78,7 +78,7 @@ export default function EvidenceVault() {
 
   const downloadFile = async (id, name) => {
     try {
-      const { data } = await axios.get(`/api/vault/download/${id}`, { responseType: 'blob' });
+      const { data } = await api.get(`/api/vault/download/${id}`, { responseType: 'blob' });
       const url = URL.createObjectURL(data);
       const a = document.createElement('a'); a.href = url; a.download = name; a.click();
       URL.revokeObjectURL(url);

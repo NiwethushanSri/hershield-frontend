@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+// Always use the Railway backend URL in production
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
 const AuthContext = createContext(null);
 
 const DEMO_USER = { id: 'demo', name: 'Demo User', phone: '+94771234567', email: 'demo@hershield.app' };
@@ -25,7 +28,7 @@ export function AuthProvider({ children }) {
     }
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      axios.get('/api/auth/me')
+      axios.get(`${API_BASE}/api/auth/me`)
         .then(r => setUser(r.data))
         .catch(() => logout())
         .finally(() => setLoading(false));
@@ -36,7 +39,7 @@ export function AuthProvider({ children }) {
 
   const login = async (phone, password) => {
     try {
-      const { data } = await axios.post('/api/auth/login', { phone, password });
+      const { data } = await axios.post(`${API_BASE}/api/auth/login`, { phone, password });
       localStorage.setItem('hs_token', data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setToken(data.token);
@@ -54,7 +57,7 @@ export function AuthProvider({ children }) {
 
   const register = async (form) => {
     try {
-      const { data } = await axios.post('/api/auth/register', form);
+      const { data } = await axios.post(`${API_BASE}/api/auth/register`, form);
       localStorage.setItem('hs_token', data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setToken(data.token);

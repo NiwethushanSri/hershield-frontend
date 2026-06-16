@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { Map, Plus, AlertTriangle, Flag, X, MapPin, Calendar } from 'lucide-react';
 
@@ -41,7 +41,7 @@ export default function CommunityMap() {
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(async (pos) => {
       try {
-        const { data } = await axios.get(`/api/community/incidents?lat=${pos.coords.latitude}&lng=${pos.coords.longitude}`);
+        const { data } = await api.get(`/api/community/incidents?lat=${pos.coords.latitude}&lng=${pos.coords.longitude}`);
         if (data.length) setIncidents(data);
       } catch {}
     });
@@ -53,7 +53,7 @@ export default function CommunityMap() {
     try {
       navigator.geolocation?.getCurrentPosition(async (pos) => {
         try {
-          await axios.post('/api/community/report', {
+          await api.post('/api/community/report', {
             ...form,
             latitude: pos.coords.latitude,
             longitude: pos.coords.longitude,

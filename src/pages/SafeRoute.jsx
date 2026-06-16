@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { Navigation, MapPin, Clock, Shield, AlertTriangle, ChevronRight, Crosshair } from 'lucide-react';
 
@@ -102,7 +102,7 @@ export default function SafeRoute() {
         ? dest.split(',').map(Number)
         : [6.9101, 79.8498];
 
-      const { data } = await axios.post('/api/route/recommend', {
+      const { data } = await api.post('/api/route/recommend', {
         origin_lat: oLat, origin_lng: oLng,
         dest_lat: dLat, dest_lng: dLng,
       });

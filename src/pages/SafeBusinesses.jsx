@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Store, Star, Shield, MapPin, Phone, Search, CheckCircle, Plus, ThumbsUp } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 
 const CATEGORIES = ['All','Restaurant','Taxi','Hotel','Hostel','Pharmacy','Salon','Clinic'];
@@ -35,7 +35,7 @@ export default function SafeBusinesses() {
       const params = {};
       if (category !== 'All') params.category = category;
       if (search) params.search = search;
-      const { data } = await axios.get('/api/businesses', { params });
+      const { data } = await api.get('/api/businesses', { params });
       setBusinesses(data);
     } catch { /* keep demo data */ }
     finally { setLoading(false); }
@@ -47,7 +47,7 @@ export default function SafeBusinesses() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await axios.post('/api/businesses/nominate', form);
+      await api.post('/api/businesses/nominate', form);
       toast.success(`${form.name} nominated for Women-Safe verification 💜`);
       setShowNominate(false);
       setForm({ name:'', category:'Restaurant', address:'', phone:'' });
@@ -61,7 +61,7 @@ export default function SafeBusinesses() {
 
   const rateBusiness = async (id, rating) => {
     try {
-      await axios.post(`/api/businesses/${id}/rate`, { rating });
+      await api.post(`/api/businesses/${id}/rate`, { rating });
       toast.success('Rating submitted! Thank you 💜');
       load();
     } catch { toast.error('Rating failed'); }

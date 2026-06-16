@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot, Phone, AlertCircle } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 
 const QUICK_PROMPTS = [
@@ -72,7 +72,7 @@ export default function AIChatPage() {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    axios.get('/api/chat/history')
+    api.get('/api/chat/history')
       .then(r => {
         if (r.data.length === 0) {
           setMessages([{
@@ -105,7 +105,7 @@ export default function AIChatPage() {
     setInput('');
     setTyping(true);
     try {
-      const { data } = await axios.post('/api/chat/message', { content: text });
+      const { data } = await api.post('/api/chat/message', { content: text });
       setMessages(m => [...m, data]);
     } catch {
       setMessages(m => [...m, { id: Date.now(), role: 'ai', text: "I'm here with you. If this is an emergency, please call 119 immediately.", actions: null }]);

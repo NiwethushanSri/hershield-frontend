@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Heart, Smile, AlertCircle, Phone, MessageCircle, Users, CheckCircle, ChevronRight, Moon, Sun, Star } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -41,16 +41,16 @@ export default function MentalHealth() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    axios.get('/api/mental/checkins/today').then(r => setTodayCheckin(r.data)).catch(() => {});
-    axios.get('/api/mental/checkins').then(r => setHistory(r.data)).catch(() => {});
-    axios.get('/api/mental/journal').then(r => setJournalEntries(r.data)).catch(() => {});
+    api.get('/api/mental/checkins/today').then(r => setTodayCheckin(r.data)).catch(() => {});
+    api.get('/api/mental/checkins').then(r => setHistory(r.data)).catch(() => {});
+    api.get('/api/mental/journal').then(r => setJournalEntries(r.data)).catch(() => {});
   }, []);
 
   const submitCheckin = async () => {
     if (!selectedMood) { toast.error('Select how you\'re feeling'); return; }
     setSaving(true);
     try {
-      const { data } = await axios.post('/api/mental/checkin', { mood_value: selectedMood });
+      const { data } = await api.post('/api/mental/checkin', { mood_value: selectedMood });
       setTodayCheckin(data);
       setHistory(prev => [data, ...prev]);
       if (selectedMood <= 2) setShowSupport(true);
@@ -62,7 +62,7 @@ export default function MentalHealth() {
   const saveJournal = async () => {
     if (!journalText.trim()) return;
     try {
-      const { data } = await axios.post('/api/mental/journal', { content: journalText });
+      const { data } = await api.post('/api/mental/journal', { content: journalText });
       setJournalEntries(prev => [data, ...prev]);
       setJournalText('');
       toast.success('Journal entry saved privately 💜');
@@ -71,7 +71,7 @@ export default function MentalHealth() {
 
   const deleteJournal = async (id) => {
     try {
-      await axios.delete(`/api/mental/journal/${id}`);
+      await api.delete(`/api/mental/journal/${id}`);
       setJournalEntries(prev => prev.filter(e => e.id !== id));
     } catch {}
   };

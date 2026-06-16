@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { Users, Plus, Trash2, Send, MapPin, CheckCircle, Phone, X } from 'lucide-react';
 
@@ -14,8 +14,8 @@ export default function TrustedCircle() {
 
   const loadContacts = async () => {
     try {
-      const { data } = await axios.get('/api/trusted-circle');
-      setContacts(data);
+      const { data } = await api.get('/api/trusted-circle');
+      setContacts(Array.isArray(data) ? data : []);
     } catch {
       // Demo contacts when backend not available
       setContacts([
@@ -32,7 +32,7 @@ export default function TrustedCircle() {
   const addContact = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/trusted-circle', form);
+      await api.post('/api/trusted-circle', form);
       toast.success(`${form.name} added to your circle 💜`);
       setForm({ name: '', phone: '', relationship: 'Friend' });
       setShowAdd(false);
@@ -45,7 +45,7 @@ export default function TrustedCircle() {
   const removeContact = async (id, name) => {
     if (!confirm(`Remove ${name} from your circle?`)) return;
     try {
-      await axios.delete(`/api/trusted-circle/${id}`);
+      await api.delete(`/api/trusted-circle/${id}`);
       setContacts(c => c.filter(x => x.id !== id));
       toast.success(`${name} removed`);
     } catch {
@@ -56,7 +56,7 @@ export default function TrustedCircle() {
   const shareLocation = async (arrived = false) => {
     navigator.geolocation?.getCurrentPosition(async (pos) => {
       try {
-        await axios.post('/api/trusted-circle/checkin', {
+        await api.post('/api/trusted-circle/checkin', {
           latitude: pos.coords.latitude,
           longitude: pos.coords.longitude,
           arrived,
