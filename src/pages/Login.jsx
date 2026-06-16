@@ -137,6 +137,7 @@ export default function Login() {
         </form>
 
         <p className="text-center text-xs text-gray-400 mt-6">Protected by end-to-end encryption 🔒</p>
+        <p className="text-center text-xs text-gray-300 mt-2">Developed by <span className="text-violet-400 font-semibold">Niwethushan</span></p>
       </div>
     </div>
   );
