@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
-import { Map, Plus, AlertTriangle, Flag, X, MapPin, Calendar } from 'lucide-react';
+import { Map, Plus, AlertTriangle, Flag, X, MapPin, Calendar, MessageCircleWarning, Eye, Car, TriangleAlert, Siren, Home, ShoppingBag, MoreHorizontal, Pin } from 'lucide-react';
 
 const TYPES = [
-  { id: 'harassment',       label: 'Harassment',       emoji: '😟' },
-  { id: 'stalking',         label: 'Stalking',          emoji: '👁️' },
-  { id: 'unsafe_taxi',      label: 'Unsafe Taxi',       emoji: '🚕' },
-  { id: 'unsafe_area',      label: 'Unsafe Area',       emoji: '⚠️' },
-  { id: 'assault_attempt',  label: 'Assault Attempt',   emoji: '🆘' },
-  { id: 'domestic_violence',label: 'Domestic Violence', emoji: '🏠' },
-  { id: 'theft',            label: 'Theft',             emoji: '💰' },
-  { id: 'other',            label: 'Other',             emoji: '📌' },
+  { id: 'harassment',        label: 'Harassment',        Icon: MessageCircleWarning, color: 'bg-pink-500',   shadow: 'shadow-pink-200'   },
+  { id: 'stalking',          label: 'Stalking',           Icon: Eye,                  color: 'bg-purple-500', shadow: 'shadow-purple-200' },
+  { id: 'unsafe_taxi',       label: 'Unsafe Taxi',        Icon: Car,                  color: 'bg-orange-500', shadow: 'shadow-orange-200' },
+  { id: 'unsafe_area',       label: 'Unsafe Area',        Icon: TriangleAlert,        color: 'bg-amber-500',  shadow: 'shadow-amber-200'  },
+  { id: 'assault_attempt',   label: 'Assault Attempt',    Icon: Siren,                color: 'bg-red-500',    shadow: 'shadow-red-200'    },
+  { id: 'domestic_violence', label: 'Domestic Violence',  Icon: Home,                 color: 'bg-rose-500',   shadow: 'shadow-rose-200'   },
+  { id: 'theft',             label: 'Theft',              Icon: ShoppingBag,          color: 'bg-yellow-500', shadow: 'shadow-yellow-200' },
+  { id: 'other',             label: 'Other',              Icon: MoreHorizontal,       color: 'bg-gray-500',   shadow: 'shadow-gray-200'   },
 ];
 
 const SEVERITY = ['low', 'medium', 'high'];
@@ -134,7 +134,7 @@ export default function CommunityMap() {
 
         {/* Type filter */}
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          {[{ id: 'all', label: 'All', emoji: '📍' }, ...TYPES].map(t => (
+          {[{ id: 'all', label: 'All', Icon: Pin, color: 'bg-violet-500' }, ...TYPES].map(t => (
             <button
               key={t.id}
               onClick={() => setFilter(t.id)}
@@ -144,7 +144,7 @@ export default function CommunityMap() {
                   : 'bg-white text-gray-600 border-gray-200'
               }`}
             >
-              {t.emoji} {t.label}
+              <t.Icon size={12} /> {t.label}
             </button>
           ))}
         </div>
@@ -164,7 +164,9 @@ export default function CommunityMap() {
                 return (
                   <div key={incident.id} className="card">
                     <div className="flex items-start gap-3">
-                      <span className="text-2xl flex-shrink-0 mt-0.5">{type.emoji}</span>
+                      <div className={`w-10 h-10 rounded-xl ${type.color} ${type.shadow} shadow-md flex items-center justify-center flex-shrink-0`}>
+                        <type.Icon size={18} className="text-white" strokeWidth={2} />
+                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-semibold text-gray-800 text-sm">{type.label}</span>
@@ -211,7 +213,7 @@ export default function CommunityMap() {
                         form.type === t.id ? 'bg-violet-600 text-white border-violet-600' : 'bg-gray-50 text-gray-700 border-gray-200'
                       }`}
                     >
-                      <span>{t.emoji}</span> {t.label}
+                      <t.Icon size={15} /> {t.label}
                     </button>
                   ))}
                 </div>
