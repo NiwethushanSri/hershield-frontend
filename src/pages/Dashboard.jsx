@@ -5,7 +5,7 @@ import api from '../utils/api';
 import {
   Shield, AlertCircle, Users, Navigation, Map,
   Bell, LogOut, MapPin, TrendingUp, ChevronRight,
-  Sun, Moon, CloudRain, Zap
+  Sun, Moon, CloudRain, Zap, CheckCircle2, Route, TriangleAlert
 } from 'lucide-react';
 
 const MOCK_SCORE = { score: 72, level: 'caution', incidents_nearby: 3, is_night: false };
@@ -186,16 +186,18 @@ export default function Dashboard() {
 
         {/* Feature cards */}
         {[
-          { icon: '📍', title: 'Share Safe Arrival', desc: 'Let your circle know you arrived safely', to: '/circle' },
-          { icon: '🗺️', title: 'Plan Safe Route', desc: 'Get the safest path to your destination', to: '/route' },
-          { icon: '⚠️', title: 'Report Incident', desc: 'Help the community stay safe', to: '/map' },
-        ].map(({ icon, title, desc, to }) => (
+          { icon: CheckCircle2, color: 'bg-green-500', shadow: 'shadow-green-200', title: 'Share Safe Arrival', desc: 'Let your circle know you arrived safely', to: '/circle' },
+          { icon: Route,        color: 'bg-blue-500',  shadow: 'shadow-blue-200',  title: 'Plan Safe Route',   desc: 'Get the safest path to your destination', to: '/route' },
+          { icon: TriangleAlert,color: 'bg-amber-500', shadow: 'shadow-amber-200', title: 'Report Incident',   desc: 'Help the community stay safe', to: '/map' },
+        ].map(({ icon: Icon, color, shadow, title, desc, to }) => (
           <button
             key={to}
             onClick={() => navigate(to)}
             className="card w-full flex items-center gap-4 active:scale-[0.99] transition-all text-left"
           >
-            <span className="text-2xl">{icon}</span>
+            <div className={`w-12 h-12 rounded-2xl ${color} ${shadow} shadow-lg flex items-center justify-center flex-shrink-0`}>
+              <Icon size={22} className="text-white" strokeWidth={2} />
+            </div>
             <div className="flex-1">
               <p className="font-semibold text-gray-800 text-sm">{title}</p>
               <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
