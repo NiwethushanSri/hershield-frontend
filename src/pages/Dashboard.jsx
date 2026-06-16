@@ -5,7 +5,7 @@ import api from '../utils/api';
 import {
   Shield, AlertCircle, Users, Navigation, Map,
   Bell, LogOut, MapPin, TrendingUp, ChevronRight,
-  Sun, Moon, CloudRain, Zap, CheckCircle2, Route, TriangleAlert
+  Sun, Moon, CloudRain, Zap, CheckCircle, GitBranch, AlertTriangle
 } from 'lucide-react';
 
 const MOCK_SCORE = { score: 72, level: 'caution', incidents_nearby: 3, is_night: false };
@@ -186,9 +186,9 @@ export default function Dashboard() {
 
         {/* Feature cards */}
         {[
-          { icon: CheckCircle2, color: 'bg-green-500', shadow: 'shadow-green-200', title: 'Share Safe Arrival', desc: 'Let your circle know you arrived safely', to: '/circle' },
-          { icon: Route,        color: 'bg-blue-500',  shadow: 'shadow-blue-200',  title: 'Plan Safe Route',   desc: 'Get the safest path to your destination', to: '/route' },
-          { icon: TriangleAlert,color: 'bg-amber-500', shadow: 'shadow-amber-200', title: 'Report Incident',   desc: 'Help the community stay safe', to: '/map' },
+          { icon: CheckCircle,   color: 'bg-green-500', shadow: 'shadow-green-200', title: 'Share Safe Arrival', desc: 'Let your circle know you arrived safely', to: '/circle' },
+          { icon: GitBranch,     color: 'bg-blue-500',  shadow: 'shadow-blue-200',  title: 'Plan Safe Route',   desc: 'Get the safest path to your destination', to: '/route' },
+          { icon: AlertTriangle, color: 'bg-amber-500', shadow: 'shadow-amber-200', title: 'Report Incident',   desc: 'Help the community stay safe', to: '/map' },
         ].map(({ icon: Icon, color, shadow, title, desc, to }) => (
           <button
             key={to}

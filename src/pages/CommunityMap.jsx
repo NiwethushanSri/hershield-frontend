@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
-import { Map, Plus, AlertTriangle, Flag, X, MapPin, Calendar, MessageCircleWarning, Eye, Car, TriangleAlert, Siren, Home, ShoppingBag, MoreHorizontal, Pin } from 'lucide-react';
+import { Map, Plus, AlertTriangle, Flag, X, MapPin, Calendar, MessageSquare, Eye, Car, Home, ShoppingBag, MoreHorizontal, AlertCircle, Bell } from 'lucide-react';
 
 const TYPES = [
-  { id: 'harassment',        label: 'Harassment',        Icon: MessageCircleWarning, color: 'bg-pink-500',   shadow: 'shadow-pink-200'   },
-  { id: 'stalking',          label: 'Stalking',           Icon: Eye,                  color: 'bg-purple-500', shadow: 'shadow-purple-200' },
-  { id: 'unsafe_taxi',       label: 'Unsafe Taxi',        Icon: Car,                  color: 'bg-orange-500', shadow: 'shadow-orange-200' },
-  { id: 'unsafe_area',       label: 'Unsafe Area',        Icon: TriangleAlert,        color: 'bg-amber-500',  shadow: 'shadow-amber-200'  },
-  { id: 'assault_attempt',   label: 'Assault Attempt',    Icon: Siren,                color: 'bg-red-500',    shadow: 'shadow-red-200'    },
-  { id: 'domestic_violence', label: 'Domestic Violence',  Icon: Home,                 color: 'bg-rose-500',   shadow: 'shadow-rose-200'   },
-  { id: 'theft',             label: 'Theft',              Icon: ShoppingBag,          color: 'bg-yellow-500', shadow: 'shadow-yellow-200' },
-  { id: 'other',             label: 'Other',              Icon: MoreHorizontal,       color: 'bg-gray-500',   shadow: 'shadow-gray-200'   },
+  { id: 'harassment',        label: 'Harassment',        Icon: MessageSquare,  color: 'bg-pink-500',   shadow: 'shadow-pink-200'   },
+  { id: 'stalking',          label: 'Stalking',           Icon: Eye,            color: 'bg-purple-500', shadow: 'shadow-purple-200' },
+  { id: 'unsafe_taxi',       label: 'Unsafe Taxi',        Icon: Car,            color: 'bg-orange-500', shadow: 'shadow-orange-200' },
+  { id: 'unsafe_area',       label: 'Unsafe Area',        Icon: AlertTriangle,  color: 'bg-amber-500',  shadow: 'shadow-amber-200'  },
+  { id: 'assault_attempt',   label: 'Assault Attempt',    Icon: Bell,           color: 'bg-red-500',    shadow: 'shadow-red-200'    },
+  { id: 'domestic_violence', label: 'Domestic Violence',  Icon: Home,           color: 'bg-rose-500',   shadow: 'shadow-rose-200'   },
+  { id: 'theft',             label: 'Theft',              Icon: ShoppingBag,    color: 'bg-yellow-500', shadow: 'shadow-yellow-200' },
+  { id: 'other',             label: 'Other',              Icon: MoreHorizontal, color: 'bg-gray-500',   shadow: 'shadow-gray-200'   },
 ];
 
 const SEVERITY = ['low', 'medium', 'high'];
@@ -134,7 +134,7 @@ export default function CommunityMap() {
 
         {/* Type filter */}
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          {[{ id: 'all', label: 'All', Icon: Pin, color: 'bg-violet-500' }, ...TYPES].map(t => (
+          {[{ id: 'all', label: 'All', Icon: MapPin, color: 'bg-violet-500' }, ...TYPES].map(t => (
             <button
               key={t.id}
               onClick={() => setFilter(t.id)}
